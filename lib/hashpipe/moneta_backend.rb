@@ -3,8 +3,10 @@ module HashPipe
     
     def initialize(archived_attribute)
       @archived_attribute = archived_attribute
-      @options            = (HashPipe::GlobalConfiguration.instance[:moneta_options]||{}).to_hash.symbolize_keys
-      @cache              = initialize_cache_klass(HashPipe::GlobalConfiguration.instance[:moneta_klass])
+      if HashPipe::GlobalConfiguration.instance[:moneta_options]
+        @options = HashPipe::GlobalConfiguration.instance[:moneta_options].to_hash.symbolize_keys
+      end
+      @cache = initialize_cache_klass(HashPipe::GlobalConfiguration.instance[:moneta_klass])
     end
 
     def save(content)
